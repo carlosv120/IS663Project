@@ -10,6 +10,6 @@ namespace InventoryV3.Server.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         // Define a DbSet for each table
-        
+        public DbSet<User> Users { get; set; } // Add Users table
     }
 }

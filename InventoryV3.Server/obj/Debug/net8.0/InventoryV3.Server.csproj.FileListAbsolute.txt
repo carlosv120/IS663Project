@@ -89,3 +89,5 @@ C:\Local Documents\Local Desktop\Provisional2\Testing\InventoryV3\InventoryV3.Se
 C:\Local Documents\Local Desktop\Provisional2\Testing\InventoryV3\InventoryV3.Server\obj\Debug\net8.0\InventoryV3.Server.pdb
 C:\Local Documents\Local Desktop\Provisional2\Testing\InventoryV3\InventoryV3.Server\obj\Debug\net8.0\InventoryV3.Server.genruntimeconfig.cache
 C:\Local Documents\Local Desktop\Provisional2\Testing\InventoryV3\InventoryV3.Server\obj\Debug\net8.0\ref\InventoryV3.Server.dll
+C:\Local Documents\Local Desktop\Provisional2\Testing\InventoryV3\InventoryV3.Server\obj\Debug\net8.0\InventoryV3.Server.sourcelink.json
+C:\Local Documents\Local Desktop\Provisional2\Testing\InventoryV3\InventoryV3.Server\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

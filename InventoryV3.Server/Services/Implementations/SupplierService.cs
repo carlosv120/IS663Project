@@ -16,12 +16,16 @@ namespace InventoryV3.Server.Services.Implementations
 
         public async Task<(IEnumerable<Supplier> Suppliers, int TotalCount)> GetAllSuppliersAsync(int pageIndex, int pageSize)
         {
+            Console.WriteLine("GetAllSuppliersAsync started.");
+
             using var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-            connection.Open();
+            await connection.OpenAsync();
 
             var parameters = new DynamicParameters();
             parameters.Add("@PageIndex", pageIndex);
             parameters.Add("@PageSize", pageSize);
+
+            Console.WriteLine("Executing stored procedure.");
 
             using var multi = await connection.QueryMultipleAsync(
                 "dbo.Suppliers_SelectAll",
@@ -29,11 +33,14 @@ namespace InventoryV3.Server.Services.Implementations
                 commandType: System.Data.CommandType.StoredProcedure
             );
 
-            // Retrieve total count and supplier list
             var totalCount = await multi.ReadSingleAsync<int>();
             var suppliers = await multi.ReadAsync<Supplier>();
 
+            Console.WriteLine("GetAllSuppliersAsync completed.");
+
             return (suppliers, totalCount);
         }
+
+
     }
 }

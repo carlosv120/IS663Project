@@ -23,6 +23,9 @@ namespace InventoryV3.Server.Configurations
             services.AddScoped<ISupplierService, SupplierService>();
 
 
+            //Register UserService
+            services.AddScoped<IUserService, UserService>(); 
+
 
             // Add more services here as needed
             return services;
