@@ -41,6 +41,27 @@ namespace InventoryV3.Server.Services.Implementations
             return (suppliers, totalCount);
         }
 
+        public async Task<int> InsertSupplierAsync(Supplier supplier, int createdBy)
+        {
+            using var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+            connection.Open();
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@Company", supplier.Company);
+            parameters.Add("@MainContactName", supplier.MainContactName);
+            parameters.Add("@MainContactNumber", supplier.MainContactNumber);
+            parameters.Add("@MainContactEmail", supplier.MainContactEmail);
+            parameters.Add("@CreatedBy", createdBy);
+            parameters.Add("@SupplierID", dbType: System.Data.DbType.Int32, direction: System.Data.ParameterDirection.Output);
+
+            await connection.ExecuteAsync("dbo.Suppliers_Insert", parameters, commandType: System.Data.CommandType.StoredProcedure);
+
+            // Retrieve the SupplierID from the output parameter
+            return parameters.Get<int>("@SupplierID");
+        }
+
+
+
 
     }
 }

@@ -1,7 +1,11 @@
 ﻿using InventoryV3.Server.Configurations;
+using InventoryV3.Server.Models.Domain;
+using InventoryV3.Server.Models.Requests;
 using InventoryV3.Server.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using System.Security.Claims;
 
 namespace InventoryV3.Server.Controllers
 {
@@ -47,6 +51,49 @@ namespace InventoryV3.Server.Controllers
             catch (Exception ex)
             {
                 Console.WriteLine($"Exception in GetAllSuppliers: {ex.Message}");
+                return StatusCode(500, new { Message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        [DynamicRoleAuthorize("Admin", "Manager")]
+        public async Task<IActionResult> InsertSupplier([FromBody] SupplierRequest supplierRequest)
+        {
+            Console.WriteLine("InsertSupplier action started.");
+
+            try
+            {
+                string userIdClaim = User.FindFirst("UserID")?.Value
+                                     ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int createdBy))
+                {
+                    Console.WriteLine("UserID claim not found or invalid.");
+                    return Unauthorized(new { Message = "Invalid user authentication." });
+                }
+
+                Console.WriteLine($"Authenticated UserID: {createdBy}");
+
+                var supplier = new Supplier
+                {
+                    Company = supplierRequest.Company,
+                    MainContactName = supplierRequest.MainContactName,
+                    MainContactNumber = supplierRequest.MainContactNumber,
+                    MainContactEmail = supplierRequest.MainContactEmail
+                };
+
+                var supplierId = await _supplierService.InsertSupplierAsync(supplier, createdBy);
+                Console.WriteLine($"Supplier inserted with ID: {supplierId}");
+
+                return CreatedAtAction(nameof(InsertSupplier), new { SupplierID = supplierId }, new { SupplierID = supplierId });
+            }
+            catch (SqlException ex) when (ex.Number == 2627) // Unique constraint violation
+            {
+                return Conflict(new { Message = "A supplier with the same name already exists." });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception in InsertSupplier: {ex.Message}");
                 return StatusCode(500, new { Message = ex.Message });
             }
         }

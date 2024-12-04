@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryV3.Server", "InventoryV3.Server\InventoryV3.Server.csproj", "{D5209522-3980-45D1-BC00-AB0224216281}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InventoryV3.Server", "InventoryV3.Server\InventoryV3.Server.csproj", "{D5209522-3980-45D1-BC00-AB0224216281}"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "inventoryv3.client", "inventoryv3.client\inventoryv3.client.esproj", "{6F0E7371-DAD6-4A14-B545-76070A85BE37}"
 EndProject
