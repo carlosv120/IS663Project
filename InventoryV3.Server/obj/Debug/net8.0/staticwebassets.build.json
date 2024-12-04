@@ -1,0 +1,23 @@
+{
+  "Version": 1,
+  "Hash": "jx5jQmlHqDFZmD2hSLOJmi3Ejcwnmo0EewwDeCxb/Vc=",
+  "Source": "InventoryV3.Server",
+  "BasePath": "_content/InventoryV3.Server",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [
+    {
+      "Identity": "C:\\Local Documents\\Local Desktop\\Provisional2\\Testing\\InventoryV3\\inventoryv3.client\\inventoryv3.client.esproj",
+      "Version": 2,
+      "Source": "inventoryv3.client",
+      "GetPublishAssetsTargets": "GetCurrentProjectPublishStaticWebAssetItems",
+      "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained",
+      "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
+      "AdditionalBuildProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained"
+    }
+  ],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
