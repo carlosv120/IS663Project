@@ -32,6 +32,9 @@ namespace InventoryV3.Server.Configurations
             // Register The InStoreLocationService
             services.AddScoped<IInStoreLocationService, InStoreLocationService>();
 
+            // Register The DispatchReceiverService
+            services.AddScoped<IDispatchReceiverService, DispatchReceiverService>();
+
 
             // Add more services here as needed
             return services;

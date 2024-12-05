@@ -26,11 +26,7 @@ namespace InventoryV3.Server.Services.Implementations
             parameters.Add("@PageIndex", pageIndex);
             parameters.Add("@PageSize", pageSize);
 
-            using var multi = await connection.QueryMultipleAsync(
-                "dbo.InStoreLocations_SelectAll",
-                parameters,
-                commandType: System.Data.CommandType.StoredProcedure
-            );
+            using var multi = await connection.QueryMultipleAsync("dbo.InStoreLocations_SelectAll", parameters, commandType: System.Data.CommandType.StoredProcedure);
 
             // Retrieve the total count and list of locations
             var totalCount = await multi.ReadSingleAsync<int>();

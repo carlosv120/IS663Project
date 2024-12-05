@@ -25,11 +25,7 @@ namespace InventoryV3.Server.Services.Implementations
             parameters.Add("@PageIndex", pageIndex);
             parameters.Add("@PageSize", pageSize);
 
-            using var multi = await connection.QueryMultipleAsync(
-                "dbo.Patient_SelectAll",
-                parameters,
-                commandType: System.Data.CommandType.StoredProcedure
-            );
+            using var multi = await connection.QueryMultipleAsync("dbo.Patient_SelectAll", parameters, commandType: System.Data.CommandType.StoredProcedure);
 
             // Read the total count and patient list
             var totalCount = await multi.ReadSingleAsync<int>();
