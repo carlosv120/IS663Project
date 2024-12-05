@@ -18,16 +18,12 @@ namespace InventoryV3.Server.Services.Implementations
 
         public async Task<(IEnumerable<Supplier> Suppliers, int TotalCount)> GetAllSuppliersAsync(int pageIndex, int pageSize)
         {
-            Console.WriteLine("GetAllSuppliersAsync started.");
-
             using var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-            await connection.OpenAsync();
+            connection.Open();
 
             var parameters = new DynamicParameters();
             parameters.Add("@PageIndex", pageIndex);
             parameters.Add("@PageSize", pageSize);
-
-            Console.WriteLine("Executing stored procedure.");
 
             using var multi = await connection.QueryMultipleAsync(
                 "dbo.Suppliers_SelectAll",
@@ -35,10 +31,9 @@ namespace InventoryV3.Server.Services.Implementations
                 commandType: System.Data.CommandType.StoredProcedure
             );
 
+            // Retrieve the total count and list of locations
             var totalCount = await multi.ReadSingleAsync<int>();
             var suppliers = await multi.ReadAsync<Supplier>();
-
-            Console.WriteLine("GetAllSuppliersAsync completed.");
 
             return (suppliers, totalCount);
         }
@@ -75,11 +70,7 @@ namespace InventoryV3.Server.Services.Implementations
             parameters.Add("@MainContactEmail", supplierRequest.MainContactEmail);
             parameters.Add("@ModifiedBy", modifiedBy);
 
-            var rowsAffected = await connection.ExecuteAsync(
-                "dbo.Suppliers_Update",
-                parameters,
-                commandType: CommandType.StoredProcedure
-            );
+            var rowsAffected = await connection.ExecuteAsync("dbo.Suppliers_Update", parameters, commandType: CommandType.StoredProcedure);
 
             if (rowsAffected == 0)
             {
@@ -96,11 +87,7 @@ namespace InventoryV3.Server.Services.Implementations
             parameters.Add("@SupplierID", supplierId);
             parameters.Add("@ModifiedBy", modifiedBy);
 
-            var rowsAffected = await connection.ExecuteAsync(
-                "dbo.Suppliers_Delete",
-                parameters,
-                commandType: System.Data.CommandType.StoredProcedure
-            );
+            var rowsAffected = await connection.ExecuteAsync("dbo.Suppliers_Delete", parameters, commandType: System.Data.CommandType.StoredProcedure);
 
             if (rowsAffected == 0)
             {

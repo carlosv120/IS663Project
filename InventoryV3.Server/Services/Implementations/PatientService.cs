@@ -60,12 +60,9 @@ namespace InventoryV3.Server.Services.Implementations
             parameters.Add("@CreatedBy", createdBy);
             parameters.Add("@PatientID", dbType: System.Data.DbType.Int32, direction: System.Data.ParameterDirection.Output);
 
-            await connection.ExecuteAsync(
-                "dbo.Patient_Insert",
-                parameters,
-                commandType: System.Data.CommandType.StoredProcedure
-            );
+            await connection.ExecuteAsync("dbo.Patient_Insert", parameters, commandType: System.Data.CommandType.StoredProcedure);
 
+            // Retrieve the SupplierID from the output parameter
             return parameters.Get<int>("@PatientID");
         }
 
@@ -91,11 +88,7 @@ namespace InventoryV3.Server.Services.Implementations
             parameters.Add("@MedicalNotes", patientRequest.MedicalNotes);
             parameters.Add("@ModifiedBy", modifiedBy);
 
-            var rowsAffected = await connection.ExecuteAsync(
-                "dbo.Patient_Update",
-                parameters,
-                commandType: CommandType.StoredProcedure
-            );
+            var rowsAffected = await connection.ExecuteAsync("dbo.Patient_Update", parameters, commandType: CommandType.StoredProcedure);
 
             if (rowsAffected == 0)
             {
@@ -112,11 +105,7 @@ namespace InventoryV3.Server.Services.Implementations
             parameters.Add("@PatientID", patientId);
             parameters.Add("@ModifiedBy", modifiedBy);
 
-            var rowsAffected = await connection.ExecuteAsync(
-                "dbo.Patient_Delete",
-                parameters,
-                commandType: CommandType.StoredProcedure
-            );
+            var rowsAffected = await connection.ExecuteAsync("dbo.Patient_Delete", parameters, commandType: CommandType.StoredProcedure);
 
             if (rowsAffected == 0)
             {

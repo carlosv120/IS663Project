@@ -29,6 +29,9 @@ namespace InventoryV3.Server.Configurations
             // Register the PatientService
             services.AddScoped<IPatientService, PatientService>();
 
+            // Register The InStoreLocationService
+            services.AddScoped<IInStoreLocationService, InStoreLocationService>();
+
 
             // Add more services here as needed
             return services;

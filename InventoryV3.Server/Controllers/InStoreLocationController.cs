@@ -5,29 +5,28 @@ using InventoryV3.Server.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
-using System.Security.Claims;
 
 namespace InventoryV3.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public class SupplierController : ControllerBase
+    public class InStoreLocationController : ControllerBase
     {
-        private readonly ISupplierService _supplierService;
+        private readonly IInStoreLocationService _inStoreLocationService;
 
-        public SupplierController(ISupplierService supplierService)
+        public InStoreLocationController(IInStoreLocationService inStoreLocationService)
         {
-            _supplierService = supplierService;
+            _inStoreLocationService = inStoreLocationService;
         }
 
         [HttpGet]
         [DynamicRoleAuthorize("Admin", "Manager")]
-        public async Task<IActionResult> GetAllSuppliers([FromQuery] int pageIndex = 1, [FromQuery] int pageSize = 10)
+        public async Task<IActionResult> GetAllInStoreLocations([FromQuery] int pageIndex = 1, [FromQuery] int pageSize = 10)
         {
             try
             {
-                var (suppliers, totalCount) = await _supplierService.GetAllSuppliersAsync(pageIndex, pageSize);
+                var (locations, totalCount) = await _inStoreLocationService.GetAllInStoreLocationsAsync(pageIndex, pageSize);
 
                 var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
 
@@ -40,7 +39,7 @@ namespace InventoryV3.Server.Controllers
                         PageSize = pageSize,
                         TotalPages = totalPages
                     },
-                    Data = suppliers
+                    Data = locations
                 });
             }
             catch (Exception ex)
@@ -49,9 +48,10 @@ namespace InventoryV3.Server.Controllers
             }
         }
 
+
         [HttpPost]
         [DynamicRoleAuthorize("Admin", "Manager")]
-        public async Task<IActionResult> InsertSupplier([FromBody] SupplierRequest supplierRequest)
+        public async Task<IActionResult> InsertInStoreLocation([FromBody] InStoreLocationRequest locationRequest)
         {
             try
             {
@@ -63,46 +63,47 @@ namespace InventoryV3.Server.Controllers
                 }
 
                 // Map the request model to the domain model
-                var supplier = new Supplier
+                var location = new InStoreLocation
                 {
-                    Company = supplierRequest.Company,
-                    MainContactName = supplierRequest.MainContactName,
-                    MainContactNumber = supplierRequest.MainContactNumber,
-                    MainContactEmail = supplierRequest.MainContactEmail
+                    LocationName = locationRequest.LocationName,
+                    Description = locationRequest.Description,
+                    Zone = locationRequest.Zone,
+                    SubZone = locationRequest.SubZone,
+                    Bin = locationRequest.Bin
                 };
 
-                var supplierId = await _supplierService.InsertSupplierAsync(supplier, createdBy);
+                var locationId = await _inStoreLocationService.InsertInStoreLocationAsync(location, createdBy);
 
-                return CreatedAtAction(nameof(InsertSupplier), new { SupplierID = supplierId });
+                return CreatedAtAction(nameof(InsertInStoreLocation), new { LocationID = locationId });
             }
             catch (SqlException ex) when (ex.Number == 2627) // Unique constraint violation
             {
-                return Conflict(new { Message = "A supplier with the same name already exists." });
+                return Conflict(new { Message = "An in-store location with the same details already exists." });
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception in InsertSupplier: {ex.Message}");
                 return StatusCode(500, new { Message = ex.Message });
             }
         }
 
+
         [HttpPut("{id}")]
         [DynamicRoleAuthorize("Admin", "Manager")]
-        public async Task<IActionResult> UpdateSupplier(int id, [FromBody] SupplierRequest supplierRequest)
+        public async Task<IActionResult> UpdateInStoreLocation(int id, [FromBody] InStoreLocationRequest locationRequest)
         {
             try
             {
-                // Get the UserID directly from the JWT claims
+                // Get UserID from JWT claims
                 var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "UserID")?.Value;
                 if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int modifiedBy))
                 {
                     return Unauthorized(new { Message = "Invalid user authentication." });
                 }
 
-                // Call the service to update the supplier
-                await _supplierService.UpdateSupplierAsync(id, supplierRequest, modifiedBy);
+                // Call the service to update the in-store location
+                await _inStoreLocationService.UpdateInStoreLocationAsync(id, locationRequest, modifiedBy);
 
-                return Ok(new { Message = "Supplier updated successfully." });
+                return Ok(new { Message = "In-store location updated successfully." });
             }
             catch (KeyNotFoundException ex)
             {
@@ -110,7 +111,7 @@ namespace InventoryV3.Server.Controllers
             }
             catch (SqlException ex) when (ex.Number == 2627) // Unique constraint violation
             {
-                return Conflict(new { Message = "A supplier with the same name already exists." });
+                return Conflict(new { Message = "An in-store location with the same details already exists." });
             }
             catch (Exception ex)
             {
@@ -120,19 +121,19 @@ namespace InventoryV3.Server.Controllers
 
         [HttpDelete("{id}")]
         [DynamicRoleAuthorize("Admin", "Manager")]
-        public async Task<IActionResult> SoftDeleteSupplier(int id)
+        public async Task<IActionResult> SoftDeleteInStoreLocation(int id)
         {
             try
             {
-                // Get the UserID from the JWT claims
+                // Get UserID directly from JWT claims
                 var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "UserID")?.Value;
                 if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int modifiedBy))
                 {
                     return Unauthorized(new { Message = "Invalid user authentication." });
                 }
 
-                // Call the service to perform the soft delete
-                await _supplierService.SoftDeleteSupplierAsync(id, modifiedBy);
+                // Call the service to deactivate the in-store location
+                await _inStoreLocationService.SoftDeleteInStoreLocationAsync(id, modifiedBy);
 
                 return NoContent(); // 204 No Content
             }
@@ -145,7 +146,6 @@ namespace InventoryV3.Server.Controllers
                 return StatusCode(500, new { Message = ex.Message }); // 500 Internal Server Error
             }
         }
-
 
     }
 }
