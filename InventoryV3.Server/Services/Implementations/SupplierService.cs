@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using InventoryV3.Server.Models.Domain;
+using InventoryV3.Server.Models.Requests;
 using InventoryV3.Server.Services.Interfaces;
 using Microsoft.Data.SqlClient;
 
@@ -60,8 +61,46 @@ namespace InventoryV3.Server.Services.Implementations
             return parameters.Get<int>("@SupplierID");
         }
 
+        public async Task UpdateSupplierAsync(SupplierUpdateRequest request, int modifiedBy)
+        {
+            using var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+            connection.Open();
 
+            var parameters = new DynamicParameters();
+            parameters.Add("@SupplierID", request.SupplierID);
+            parameters.Add("@Company", request.Company);
+            parameters.Add("@MainContactName", request.MainContactName);
+            parameters.Add("@MainContactNumber", request.MainContactNumber);
+            parameters.Add("@MainContactEmail", request.MainContactEmail);
+            parameters.Add("@ModifiedBy", modifiedBy);
 
+            await connection.ExecuteAsync(
+                "dbo.Suppliers_Update",
+                parameters,
+                commandType: System.Data.CommandType.StoredProcedure
+            );
+        }
+
+        public async Task SoftDeleteSupplierAsync(int supplierId, int modifiedBy)
+        {
+            using var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+            connection.Open();
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@SupplierID", supplierId);
+            parameters.Add("@ModifiedBy", modifiedBy);
+
+            var rowsAffected = await connection.ExecuteAsync(
+                "dbo.Suppliers_Delete",
+                parameters,
+                commandType: System.Data.CommandType.StoredProcedure
+            );
+
+            if (rowsAffected == 0)
+            {
+                throw new KeyNotFoundException($"Supplier with ID {supplierId} not found.");
+            }
+        }
 
     }
 }

@@ -98,5 +98,58 @@ namespace InventoryV3.Server.Controllers
             }
         }
 
+        [HttpPut]
+        [DynamicRoleAuthorize("Admin", "Manager")]
+        public async Task<IActionResult> UpdateSupplier([FromBody] SupplierUpdateRequest supplierRequest)
+        {
+            try
+            {
+                // Get the UserID directly from the JWT claims
+                var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "UserID")?.Value;
+                if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int modifiedBy))
+                {
+                    return Unauthorized(new { Message = "Invalid user authentication." });
+                }
+
+                // Call the service to update the supplier
+                await _supplierService.UpdateSupplierAsync(supplierRequest, modifiedBy);
+
+                return Ok(new { Message = "Supplier updated successfully." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = ex.Message });
+            }
+        }
+
+        [HttpDelete("{id}")]
+        [DynamicRoleAuthorize("Admin", "Manager")]
+        public async Task<IActionResult> SoftDeleteSupplier(int id)
+        {
+            try
+            {
+                // Get the UserID from the JWT claims
+                var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "UserID")?.Value;
+                if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int modifiedBy))
+                {
+                    return Unauthorized(new { Message = "Invalid user authentication." });
+                }
+
+                // Call the service to perform the soft delete
+                await _supplierService.SoftDeleteSupplierAsync(id, modifiedBy);
+
+                return NoContent(); // 204 No Content
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { Message = ex.Message }); // 404 Not Found
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = ex.Message }); // 500 Internal Server Error
+            }
+        }
+
+
     }
 }
