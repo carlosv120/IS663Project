@@ -9,11 +9,9 @@ namespace InventoryV3.Server.Services.Interfaces
 
         Task<int> InsertSupplierAsync(Supplier supplier, int createdBy);
 
-        Task UpdateSupplierAsync(SupplierUpdateRequest request, int modifiedBy);
+        Task UpdateSupplierAsync(int supplierId, SupplierRequest supplierRequest, int modifiedBy);
 
         Task SoftDeleteSupplierAsync(int supplierId, int modifiedBy);
-
-
 
     }
 }

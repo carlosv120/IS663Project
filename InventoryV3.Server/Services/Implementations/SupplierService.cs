@@ -3,6 +3,7 @@ using InventoryV3.Server.Models.Domain;
 using InventoryV3.Server.Models.Requests;
 using InventoryV3.Server.Services.Interfaces;
 using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace InventoryV3.Server.Services.Implementations
 {
@@ -61,28 +62,28 @@ namespace InventoryV3.Server.Services.Implementations
             return parameters.Get<int>("@SupplierID");
         }
 
-        public async Task UpdateSupplierAsync(SupplierUpdateRequest request, int modifiedBy)
+        public async Task UpdateSupplierAsync(int supplierId, SupplierRequest supplierRequest, int modifiedBy)
         {
             using var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
             connection.Open();
 
             var parameters = new DynamicParameters();
-            parameters.Add("@SupplierID", request.SupplierID);
-            parameters.Add("@Company", request.Company);
-            parameters.Add("@MainContactName", request.MainContactName);
-            parameters.Add("@MainContactNumber", request.MainContactNumber);
-            parameters.Add("@MainContactEmail", request.MainContactEmail);
+            parameters.Add("@SupplierID", supplierId);
+            parameters.Add("@Company", supplierRequest.Company);
+            parameters.Add("@MainContactName", supplierRequest.MainContactName);
+            parameters.Add("@MainContactNumber", supplierRequest.MainContactNumber);
+            parameters.Add("@MainContactEmail", supplierRequest.MainContactEmail);
             parameters.Add("@ModifiedBy", modifiedBy);
 
             var rowsAffected = await connection.ExecuteAsync(
                 "dbo.Suppliers_Update",
                 parameters,
-                commandType: System.Data.CommandType.StoredProcedure
+                commandType: CommandType.StoredProcedure
             );
 
             if (rowsAffected == 0)
             {
-                throw new KeyNotFoundException("Supplier not found.");
+                throw new KeyNotFoundException($"Supplier with ID {supplierId} not found.");
             }
         }
 
