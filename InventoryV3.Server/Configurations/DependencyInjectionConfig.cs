@@ -24,7 +24,10 @@ namespace InventoryV3.Server.Configurations
 
 
             //Register UserService
-            services.AddScoped<IUserService, UserService>(); 
+            services.AddScoped<IUserService, UserService>();
+
+            // Register the PatientService
+            services.AddScoped<IPatientService, PatientService>();
 
 
             // Add more services here as needed
