@@ -116,6 +116,10 @@ namespace InventoryV3.Server.Controllers
 
                 return Ok(new { Message = "Supplier updated successfully." });
             }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { Message = ex.Message }); // 404 Not Found
+            }
             catch (Exception ex)
             {
                 return StatusCode(500, new { Message = ex.Message });

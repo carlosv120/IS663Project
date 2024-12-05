@@ -74,11 +74,16 @@ namespace InventoryV3.Server.Services.Implementations
             parameters.Add("@MainContactEmail", request.MainContactEmail);
             parameters.Add("@ModifiedBy", modifiedBy);
 
-            await connection.ExecuteAsync(
+            var rowsAffected = await connection.ExecuteAsync(
                 "dbo.Suppliers_Update",
                 parameters,
                 commandType: System.Data.CommandType.StoredProcedure
             );
+
+            if (rowsAffected == 0)
+            {
+                throw new KeyNotFoundException("Supplier not found.");
+            }
         }
 
         public async Task SoftDeleteSupplierAsync(int supplierId, int modifiedBy)
