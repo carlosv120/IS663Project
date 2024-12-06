@@ -5,29 +5,28 @@ using InventoryV3.Server.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
-using System.Security.Claims;
 
 namespace InventoryV3.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public class SupplierController : ControllerBase
+    public class RequestController : ControllerBase
     {
-        private readonly ISupplierService _supplierService;
+        private readonly IRequestService _requestService;
 
-        public SupplierController(ISupplierService supplierService)
+        public RequestController(IRequestService requestService)
         {
-            _supplierService = supplierService;
+            _requestService = requestService;
         }
 
         [HttpGet]
         [DynamicRoleAuthorize("Admin", "Manager")]
-        public async Task<IActionResult> GetAllSuppliers([FromQuery] int pageIndex = 1, [FromQuery] int pageSize = 10)
+        public async Task<IActionResult> GetAllRequests([FromQuery] int pageIndex = 1, [FromQuery] int pageSize = 10)
         {
             try
             {
-                var (suppliers, totalCount) = await _supplierService.GetAllSuppliersAsync(pageIndex, pageSize);
+                var (requests, totalCount) = await _requestService.GetAllRequestsAsync(pageIndex, pageSize);
 
                 var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
 
@@ -40,7 +39,7 @@ namespace InventoryV3.Server.Controllers
                         PageSize = pageSize,
                         TotalPages = totalPages
                     },
-                    Data = suppliers
+                    Data = requests
                 });
             }
             catch (Exception ex)
@@ -51,7 +50,7 @@ namespace InventoryV3.Server.Controllers
 
         [HttpPost]
         [DynamicRoleAuthorize("Admin", "Manager")]
-        public async Task<IActionResult> InsertSupplier([FromBody] SupplierRequest supplierRequest)
+        public async Task<IActionResult> InsertRequest([FromBody] RequestInsertRequest request)
         {
             try
             {
@@ -62,22 +61,10 @@ namespace InventoryV3.Server.Controllers
                     return Unauthorized(new { Message = "Invalid user authentication." });
                 }
 
-                // Map the request model to the domain model
-                var supplier = new Supplier
-                {
-                    Company = supplierRequest.Company,
-                    MainContactName = supplierRequest.MainContactName,
-                    MainContactNumber = supplierRequest.MainContactNumber,
-                    MainContactEmail = supplierRequest.MainContactEmail
-                };
+                // Call the service to insert the request
+                var requestId = await _requestService.InsertRequestWithDetailsAsync(request, createdBy);
 
-                var supplierId = await _supplierService.InsertSupplierAsync(supplier, createdBy);
-
-                return CreatedAtAction(nameof(InsertSupplier), new { SupplierID = supplierId });
-            }
-            catch (SqlException ex) when (ex.Number == 2627) // Unique constraint violation
-            {
-                return Conflict(new { Message = "A supplier with the same name already exists." });
+                return CreatedAtAction(nameof(InsertRequest), new { RequestID = requestId });
             }
             catch (Exception ex)
             {
@@ -87,29 +74,25 @@ namespace InventoryV3.Server.Controllers
 
         [HttpPut("{id}")]
         [DynamicRoleAuthorize("Admin", "Manager")]
-        public async Task<IActionResult> UpdateSupplier(int id, [FromBody] SupplierRequest supplierRequest)
+        public async Task<IActionResult> UpdateRequest(int id, [FromBody] RequestUpdateRequest request)
         {
             try
             {
-                // Get the UserID directly from the JWT claims
+                // Get UserID from JWT claims
                 var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "UserID")?.Value;
                 if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int modifiedBy))
                 {
                     return Unauthorized(new { Message = "Invalid user authentication." });
                 }
 
-                // Call the service to update the supplier
-                await _supplierService.UpdateSupplierAsync(id, supplierRequest, modifiedBy);
+                // Call the service to update the request
+                await _requestService.UpdateRequestWithDetailsAsync(id, request, modifiedBy);
 
-                return Ok(new { Message = "Supplier updated successfully." });
+                return Ok(new { Message = "Request updated successfully." });
             }
             catch (KeyNotFoundException ex)
             {
                 return NotFound(new { Message = ex.Message }); // 404 Not Found
-            }
-            catch (SqlException ex) when (ex.Number == 2627) // Unique constraint violation
-            {
-                return Conflict(new { Message = "A supplier with the same name already exists." });
             }
             catch (Exception ex)
             {
@@ -119,11 +102,11 @@ namespace InventoryV3.Server.Controllers
 
         [HttpDelete("{id}")]
         [DynamicRoleAuthorize("Admin", "Manager")]
-        public async Task<IActionResult> SoftDeleteSupplier(int id)
+        public async Task<IActionResult> SoftDeleteRequest(int id)
         {
             try
             {
-                // Get the UserID from the JWT claims
+                // Get UserID from JWT claims
                 var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "UserID")?.Value;
                 if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int modifiedBy))
                 {
@@ -131,7 +114,7 @@ namespace InventoryV3.Server.Controllers
                 }
 
                 // Call the service to perform the soft delete
-                await _supplierService.SoftDeleteSupplierAsync(id, modifiedBy);
+                await _requestService.SoftDeleteRequestAsync(id, modifiedBy);
 
                 return NoContent(); // 204 No Content
             }
@@ -144,7 +127,5 @@ namespace InventoryV3.Server.Controllers
                 return StatusCode(500, new { Message = ex.Message }); // 500 Internal Server Error
             }
         }
-
-
     }
 }

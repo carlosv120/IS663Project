@@ -18,10 +18,8 @@ namespace InventoryV3.Server.Configurations
             // Register services
             services.AddScoped<ITestService, TestService>();
 
-
             // Register SupplierService
             services.AddScoped<ISupplierService, SupplierService>();
-
 
             //Register UserService
             services.AddScoped<IUserService, UserService>();
@@ -35,6 +33,8 @@ namespace InventoryV3.Server.Configurations
             // Register The DispatchReceiverService
             services.AddScoped<IDispatchReceiverService, DispatchReceiverService>();
 
+            // Register The RequestService
+            services.AddScoped<IRequestService, RequestService>();
 
             // Add more services here as needed
             return services;
