@@ -36,6 +36,10 @@ namespace InventoryV3.Server.Configurations
             // Register The RequestService
             services.AddScoped<IRequestService, RequestService>();
 
+            // Register The InventoryTransactionService
+            services.AddScoped<IInventoryTransactionService, InventoryTransactionService>();
+
+
             // Add more services here as needed
             return services;
         }
