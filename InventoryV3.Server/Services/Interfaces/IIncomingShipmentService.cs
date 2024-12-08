@@ -5,8 +5,8 @@ namespace InventoryV3.Server.Services.Interfaces
     public interface IIncomingShipmentService
     {
         Task<int> InsertIncomingShipmentWithDetailsAsync(IncomingShipmentInsertRequest request, int createdBy);
-    
-    
+
+        Task UpdateIncomingShipmentWithDetailsAsync(int incomingShipmentID, IncomingShipmentUpdateRequest request, int modifiedBy);
     }
 
 }

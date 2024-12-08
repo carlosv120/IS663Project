@@ -4,6 +4,7 @@ using InventoryV3.Server.Services.Interfaces;
 using InventoryV3.Server.Models.Requests;
 using InventoryV3.Server.Configurations;
 using Microsoft.Data.SqlClient;
+using InventoryV3.Server.Services.Implementations;
 
 namespace InventoryV3.Server.Controllers
 {
@@ -45,6 +46,35 @@ namespace InventoryV3.Server.Controllers
                 return StatusCode(500, new { Message = ex.Message });
             }
         }
+
+        [HttpPut("{id}")]
+        [DynamicRoleAuthorize("Admin", "Manager")]
+        public async Task<IActionResult> UpdateIncomingShipmentWithDetails(int id, [FromBody] IncomingShipmentUpdateRequest request)
+        {
+            try
+            {
+                // Validate the user authentication
+                var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "UserID")?.Value;
+                if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int modifiedBy))
+                {
+                    return Unauthorized(new { Message = "Invalid user authentication." });
+                }
+
+                // Call the service to update the incoming shipment
+                await _incomingShipmentService.UpdateIncomingShipmentWithDetailsAsync(id, request, modifiedBy);
+
+                return Ok(new { Message = "Incoming shipment updated successfully." });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { Message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = ex.Message });
+            }
+        }
+
 
     }
 

@@ -38,6 +38,32 @@ namespace InventoryV3.Server.Services.Implementations
             return incomingShipmentID;
         }
 
+        public async Task UpdateIncomingShipmentWithDetailsAsync(int incomingShipmentID, IncomingShipmentUpdateRequest request, int modifiedBy)
+        {
+            using var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+            await connection.OpenAsync();
+
+            // Prepare the parameters for the stored procedure
+            var parameters = new DynamicParameters();
+            parameters.Add("@IncomingShipmentID", incomingShipmentID);
+            parameters.Add("@Notes", request.Notes);
+            parameters.Add("@ShipmentDetailList", JsonConvert.SerializeObject(request.ShipmentDetailList));
+            parameters.Add("@ModifiedBy", modifiedBy);
+
+            // Execute the stored procedure
+            var affectedRows = await connection.ExecuteAsync(
+                "dbo.IncomingShipment_UpdateWithDetails",
+                parameters,
+                commandType: CommandType.StoredProcedure
+            );
+
+            // Validate result
+            if (affectedRows == 0)
+            {
+                throw new KeyNotFoundException($"Incoming shipment with ID {incomingShipmentID} not found.");
+            }
+        }
+
 
 
     }
