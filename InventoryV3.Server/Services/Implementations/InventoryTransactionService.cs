@@ -97,10 +97,7 @@ namespace InventoryV3.Server.Services.Implementations
             var transactionDetailJson = JsonConvert.SerializeObject(request.TransactionDetails);
             parameters.Add("@TransactionDetailList", transactionDetailJson);
 
-            var rowsAffected = await connection.ExecuteAsync(
-                "dbo.InventoryTransaction_UpdateWithDetails",
-                parameters,
-                commandType: CommandType.StoredProcedure);
+            var rowsAffected = await connection.ExecuteAsync("dbo.InventoryTransaction_UpdateWithDetails",parameters,commandType: CommandType.StoredProcedure);
 
             if (rowsAffected == 0)
             {

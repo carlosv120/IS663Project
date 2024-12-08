@@ -39,6 +39,8 @@ namespace InventoryV3.Server.Configurations
             // Register The InventoryTransactionService
             services.AddScoped<IInventoryTransactionService, InventoryTransactionService>();
 
+            // Register The InventoryItemService
+            services.AddScoped<IInventoryItemService, InventoryItemService>();
 
             // Add more services here as needed
             return services;

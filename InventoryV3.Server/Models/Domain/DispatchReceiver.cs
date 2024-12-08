@@ -18,7 +18,7 @@
         public string ModifiedByFirstName { get; set; }
         public string ModifiedByLastName { get; set; }
         public DateTime DateCreated { get; set; }
-        public DateTime? DateModified { get; set; }
+        public DateTime DateModified { get; set; }
     }
 
 }
