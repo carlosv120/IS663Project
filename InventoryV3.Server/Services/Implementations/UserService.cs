@@ -25,11 +25,7 @@ namespace InventoryV3.Server.Services.Implementations
             parameters.Add("@Username", username);
             parameters.Add("@PasswordHash", CreatePasswordHash(password));
 
-            return await connection.QuerySingleOrDefaultAsync<User>(
-                "dbo.Users_Authenticate",
-                parameters,
-                commandType: System.Data.CommandType.StoredProcedure
-            );
+            return await connection.QuerySingleOrDefaultAsync<User>("dbo.Users_Authenticate", parameters, commandType: System.Data.CommandType.StoredProcedure );
         }
 
 
@@ -41,11 +37,7 @@ namespace InventoryV3.Server.Services.Implementations
             var parameters = new DynamicParameters();
             parameters.Add("@UserID", userId);
 
-            return await connection.QuerySingleOrDefaultAsync<User>(
-                "dbo.Users_GetByID",
-                parameters,
-                commandType: System.Data.CommandType.StoredProcedure
-            );
+            return await connection.QuerySingleOrDefaultAsync<User>( "dbo.Users_GetByID",  parameters, commandType: System.Data.CommandType.StoredProcedure);
         }
 
 
@@ -65,11 +57,7 @@ namespace InventoryV3.Server.Services.Implementations
             parameters.Add("@ModifiedBy", user.ModifiedBy);
             parameters.Add("@UserID", dbType: System.Data.DbType.Int32, direction: System.Data.ParameterDirection.Output);
 
-            await connection.ExecuteAsync(
-                "dbo.Users_Register",
-                parameters,
-                commandType: System.Data.CommandType.StoredProcedure
-            );
+            await connection.ExecuteAsync( "dbo.Users_Register", parameters, commandType: System.Data.CommandType.StoredProcedure);
 
             return parameters.Get<int>("@UserID");
         }

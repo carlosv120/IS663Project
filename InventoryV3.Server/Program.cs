@@ -49,12 +49,10 @@ namespace InventoryV3.Server
                     {
                         OnAuthenticationFailed = context =>
                         {
-                            Console.WriteLine($"Authentication failed: {context.Exception.Message}");
                             return Task.CompletedTask;
                         },
                         OnTokenValidated = context =>
                         {
-                            Console.WriteLine("Token successfully validated.");
                             return Task.CompletedTask;
                         },
                         OnMessageReceived = context =>
@@ -62,7 +60,6 @@ namespace InventoryV3.Server
                             if (context.Request.Cookies.ContainsKey("AuthToken"))
                             {
                                 context.Token = context.Request.Cookies["AuthToken"];
-                                Console.WriteLine($"Token found in AuthToken cookie: {context.Token}");
                             }
                             else
                             {

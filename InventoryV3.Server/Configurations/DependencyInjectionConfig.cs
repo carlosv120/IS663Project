@@ -42,6 +42,10 @@ namespace InventoryV3.Server.Configurations
             // Register The InventoryItemService
             services.AddScoped<IInventoryItemService, InventoryItemService>();
 
+            // Register The IncomingShipmentService
+            services.AddScoped<IIncomingShipmentService, IncomingShipmentService>();
+
+
             // Add more services here as needed
             return services;
         }

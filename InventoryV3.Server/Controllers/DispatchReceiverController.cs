@@ -86,7 +86,6 @@ namespace InventoryV3.Server.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception in InsertDispatchReceiver: {ex.Message}");
                 return StatusCode(500, new { Message = ex.Message });
             }
         }

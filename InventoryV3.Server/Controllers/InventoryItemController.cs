@@ -38,7 +38,6 @@ namespace InventoryV3.Server.Controllers
             }
         }
 
-
         [HttpPost]
         [DynamicRoleAuthorize("Admin", "Manager")]
         public async Task<IActionResult> InsertInventoryItem([FromBody] InventoryItemInsertRequest request)
