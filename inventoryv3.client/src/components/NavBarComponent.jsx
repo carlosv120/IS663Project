@@ -68,7 +68,7 @@ export default function NavBarComponent() {
                     textDecoration: "none",
                   }}
                 >
-                  Inventory System
+                  Medical Inventory Management System
                 </Typography>
 
                 <Box
