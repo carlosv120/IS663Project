@@ -8,9 +8,19 @@
     <PackageJsonScriptsBuild Condition="$(PackageJsonScriptsBuild) == ''">react-scripts build</PackageJsonScriptsBuild>
     <PackageJsonScriptsTest Condition="$(PackageJsonScriptsTest) == ''">react-scripts test</PackageJsonScriptsTest>
     <PackageJsonScriptsEject Condition="$(PackageJsonScriptsEject) == ''">react-scripts eject</PackageJsonScriptsEject>
+    <PackageJsonDependenciesEmotionReact Condition="$(PackageJsonDependenciesEmotionReact) == ''">^11.14.0</PackageJsonDependenciesEmotionReact>
+    <PackageJsonDependenciesEmotionStyled Condition="$(PackageJsonDependenciesEmotionStyled) == ''">^11.14.0</PackageJsonDependenciesEmotionStyled>
+    <PackageJsonDependenciesIconscoutReactUnicons Condition="$(PackageJsonDependenciesIconscoutReactUnicons) == ''">^2.2.1</PackageJsonDependenciesIconscoutReactUnicons>
+    <PackageJsonDependenciesMuiIconsMaterial Condition="$(PackageJsonDependenciesMuiIconsMaterial) == ''">^6.2.0</PackageJsonDependenciesMuiIconsMaterial>
+    <PackageJsonDependenciesMuiMaterial Condition="$(PackageJsonDependenciesMuiMaterial) == ''">^6.2.0</PackageJsonDependenciesMuiMaterial>
+    <PackageJsonDependenciesMuiSystem Condition="$(PackageJsonDependenciesMuiSystem) == ''">^6.2.0</PackageJsonDependenciesMuiSystem>
+    <PackageJsonDependenciesMuiXDataGrid Condition="$(PackageJsonDependenciesMuiXDataGrid) == ''">^7.23.1</PackageJsonDependenciesMuiXDataGrid>
+    <PackageJsonDependenciesApexcharts Condition="$(PackageJsonDependenciesApexcharts) == ''">^4.2.0</PackageJsonDependenciesApexcharts>
     <PackageJsonDependenciesHttpProxyMiddleware Condition="$(PackageJsonDependenciesHttpProxyMiddleware) == ''">^3.0.3</PackageJsonDependenciesHttpProxyMiddleware>
     <PackageJsonDependenciesReact Condition="$(PackageJsonDependenciesReact) == ''">^18.3.1</PackageJsonDependenciesReact>
+    <PackageJsonDependenciesReactApexcharts Condition="$(PackageJsonDependenciesReactApexcharts) == ''">^1.7.0</PackageJsonDependenciesReactApexcharts>
     <PackageJsonDependenciesReactDom Condition="$(PackageJsonDependenciesReactDom) == ''">^18.3.1</PackageJsonDependenciesReactDom>
+    <PackageJsonDependenciesReactRouterDom Condition="$(PackageJsonDependenciesReactRouterDom) == ''">^7.0.2</PackageJsonDependenciesReactRouterDom>
     <PackageJsonDependenciesReactScripts Condition="$(PackageJsonDependenciesReactScripts) == ''">^5.0.1</PackageJsonDependenciesReactScripts>
     <PackageJsonDependenciesWebVitals Condition="$(PackageJsonDependenciesWebVitals) == ''">^4.2.4</PackageJsonDependenciesWebVitals>
     <PackageJsonDependenciesWebpackDevServer Condition="$(PackageJsonDependenciesWebpackDevServer) == ''">^5.1.0</PackageJsonDependenciesWebpackDevServer>

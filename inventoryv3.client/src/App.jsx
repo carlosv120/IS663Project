@@ -1,39 +1,82 @@
-import React, { useState, useEffect } from "react"; // Import useState and useEffect
-import logo from "./logo.svg";
-import "./App.css";
+import './assets/styles/links.css';
+
+import { ThemeProvider, CssBaseline, createTheme } from "@mui/material";
+import { UilReceipt, UilBox, UilTruck, UilCheckCircle } from '@iconscout/react-unicons';
+
+import RootComponent from "./components/RootComponent";
+import RootPage from "./components/RootPage";
+import DataTable from "./test/DataTable";
+import Hello from "./test/Hello";
+
+import {
+  Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+} from "react-router-dom";
+
+import Home from "./components/bodyComponents/home/Home";
+import Inventory from "./components/bodyComponents/inventory/Inventory";
+import Patient from "./components/bodyComponents/patient/Patient";
+import Revenue from "./components/bodyComponents/revenue/Revenue";
+import Supplier from "./components/bodyComponents/supplier/Supplier";
+import Request from "./components/bodyComponents/request/Request";
+import Growth from "./components/bodyComponents/growth/Growth";
+import Report from "./components/bodyComponents/report/Report";
+import Setting from "./components/bodyComponents/Settings/Setting";
+import Order from "./components/bodyComponents/order/Order";
+import User from "./components/bodyComponents/user/User";
 
 function App() {
-  const [message, setMessage] = useState("Loading..."); // Initialize state with "Loading..."
+  const theme = createTheme({
+    spacing: 4,
+    palette: {
+      mode: "light",
+      // Customize your palette here if needed
+    },
+    typography: {
+      fontFamily: '"Inter", Arial, sans-serif',
+    },
+    components: {
+      MuiCssBaseline: {
+        styleOverrides: {
+          '@global': {
+            '@font-face': {
+              fontFamily: 'Inter',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              src: `url('./assets/fonts/Inter.ttf') format('truetype')`,
+            },
+          },
+        },
+      },
+    },
+  });
 
-  useEffect(() => {
-    // Fetch data from the server API
-    fetch("/api/test/ping") // Proxy in package.json will forward to the server
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Network response was not ok (${response.statusText})`);
-        }
-        return response.text(); // Parse response as plain text
-      })
-      .then((data) => setMessage(data)) // Append "Pong: " to the server's response
-      .catch((error) => setMessage(`Error: ${error.message}`)); // Handle errors gracefully
-  }, []); // Dependency array ensures useEffect runs only once
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path="/" element={<RootComponent />}>
+        <Route index element={<RootPage />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/inventory" element={<Inventory />} />
+        <Route path="/orders" element={<Order />} />
+        <Route path="/users" element={<User />} />
+        <Route path="/patients" element={<Patient />} />
+        <Route path="/revenue" element={<Revenue />} />
+        <Route path="/suppliers" element={<Supplier />} />
+        <Route path="/requests" element={<Request />} />
+        <Route path="/growth" element={<Growth />} />
+        <Route path="/reports" element={<Report />} />
+        <Route path="/settings" element={<Setting />} />
+      </Route>
+    )
+  );
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>React-ASP.NET Core Connection Test</h1>
-        <p>Server Response: {message}</p> {/* Display the server's response */}
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <RouterProvider router={router} />
+    </ThemeProvider>
   );
 }
 
