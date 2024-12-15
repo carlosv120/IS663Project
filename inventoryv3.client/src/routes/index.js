@@ -5,6 +5,7 @@ import ProtectedRoute from "../components/ProtectedRoute";
 import Home from "../components/bodyComponents/home/Home";
 import Inventory from "../components/bodyComponents/inventory/Inventory";
 import Patient from "../components/bodyComponents/patient/Patient";
+import Order from "../components/bodyComponents/order/Order";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,6 +26,7 @@ const router = createBrowserRouter(
         <Route path="/home" element={<Home />} />
         <Route path="/inventory" element={<Inventory />} />
         <Route path="/patients" element={<Patient />} />
+        <Route path="/orders" element={<Order />} />
       </Route>
     </>
   )
