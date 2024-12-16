@@ -21,11 +21,12 @@ import {
   AccountCircleOutlined,
 } from "@mui/icons-material";
 import { useState } from "react";
+import { Link } from "react-router-dom"; // Import Link
 
 export default function NavBarComponent() {
   const [notificationAnchorEl, setNotificationAnchorEl] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
-  // handleNotificationClicked
+    // handleNotificationClicked
   const open = Boolean(anchorEl);
   const notificationOpen = Boolean(notificationAnchorEl);
   const handleAvatarClicked = (event) => {
@@ -68,7 +69,7 @@ export default function NavBarComponent() {
                     textDecoration: "none",
                   }}
                 >
-                  Medical Inventory Management System
+                  Inventory System
                 </Typography>
 
                 <Box
@@ -92,10 +93,10 @@ export default function NavBarComponent() {
                     onClick={notificationHandleClose}
                     onClose={notificationHandleClose}
                   >
-                    <MenuItem>Notification number 1 </MenuItem>
+                    <MenuItem>Order Fulfilment </MenuItem>
                     <Divider />
-                    <MenuItem>Notification number 2</MenuItem>
-                    <MenuItem>Notification number 3</MenuItem>
+                    <MenuItem>Restock </MenuItem>
+                    <MenuItem>Invoice number 235377 needs attention</MenuItem>
                   </Menu>
                   <IconButton
                     onClick={handleAvatarClicked}
@@ -124,7 +125,7 @@ export default function NavBarComponent() {
                   </MenuItem>
                   <Divider />
 
-                  <MenuItem>
+                  <MenuItem component={Link} to="/settings">
                     <ListItemIcon>
                       <Settings fontSize="small" />
                     </ListItemIcon>

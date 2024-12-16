@@ -57,7 +57,7 @@ export default function TotalSales() {
         left: 2,
         blur: 4,
         opacity: 0.2,
-      },
+      }, 
     },
     xaxis: {
       categories: ["Mon", "Thu", "Wed", "The", "Fri", "Sat", "Sun"],
