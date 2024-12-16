@@ -101,17 +101,15 @@ export default class RequestList extends Component {
           height: "100%",
         }}
       >
-        <br></br>
         <Button
           variant="contained"
           color="primary"
           onClick={this.openAddRequestModal}
+          sx={{ mb: 2 }}
         >
           Add Request
         </Button>
-        <br></br>
-        <br></br>
-        <DataGrid
+        <DataGrid 
           sx={{
             borderLeft: 0,
             borderRight: 0,

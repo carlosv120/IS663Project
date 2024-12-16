@@ -1,77 +1,120 @@
-import { Component } from "react";
-import { Avatar, Box, Typography } from "@mui/material";
+import React, { Component } from "react";
+import { Box, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import patients from "./Patients";
+import AddPatientModal from "./AddPatientModal"; // Import the AddPatientModal component
+import patientsList from "./Patients"; // Assuming initial patient data is here
+
 export default class PatientList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      patients: patientsList, // Initialize with your patient data
+      isAddPatientModalOpen: false,
+      editingPatient: null, // Track the patient being edited, if any
+    };
+  }
+
+  // Open modal for adding a new patient
+  openAddPatientModal = () => {
+    this.setState({ isAddPatientModalOpen: true, editingPatient: null });
+  };
+
+  // Open modal for editing an existing patient
+  openEditPatientModal = (patient) => {
+    this.setState({ isAddPatientModalOpen: true, editingPatient: patient });
+  };
+
+  // Close the modal
+  closeAddPatientModal = () => {
+    this.setState({ isAddPatientModalOpen: false });
+  };
+
+  // Handle adding a new patient
+  handleAddPatient = (newPatient) => {
+    this.setState((prevState) => ({
+      patients: [...prevState.patients, newPatient], // Add new patient to the list
+      isAddPatientModalOpen: false, // Close the modal after adding
+    }));
+  };
+
+  // Handle updating an existing patient
+  handleUpdatePatient = (updatedPatient) => {
+    this.setState((prevState) => ({
+      patients: prevState.patients.map((patient) =>
+        patient.id === updatedPatient.id ? updatedPatient : patient
+      ),
+      isAddPatientModalOpen: false, // Close the modal after updating
+    }));
+  };
+
+  // Handle deleting a patient
+  handleDeletePatient = (id) => {
+    this.setState((prevState) => ({
+      patients: prevState.patients.filter((patient) => patient.id !== id),
+    }));
+  };
+
   render() {
     const columns = [
-      {
+{
         field: "id",
         headerName: "Patient ID",
         width: 90,
-        description: "id of the product",
       },
       {
         field: "fullname",
         headerName: "Full Name",
         width: 200,
-        description: "customer full name",
-        renderCell: (params) => {
-          return (
-            <>
-              <Avatar
-                alt="name"
-                variant="square"
-                sx={{ borderRadius: 1, width: 30, height: 30 }}
-              >
-                {`${params.row.firstName[0]}`}
-              </Avatar>
-              <Typography variant="subtitle2" sx={{ mx: 3 }}>
-                {`${params.row.firstName || ""} ${params.row.lastName || ""} `}
-              </Typography>
-            </>
-          );
-        },
+        renderCell: (params) => (
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+              {`${params.row.firstName || ""} ${params.row.lastName || ""}`}
+          </Box>
+        ),
       },
-      /*
-      {
-        field: "orderNumber",
-        headerName: "Number Of Order",
-        width: 200,
-        description: "number of order that the customer made",
-        valueGetter: (params) => params.row.orders.length,
-      },
-      {
-        field: "total",
-        headerName: "Total Amount",
-        width: 300,
-        description: "total amount of the order",
-        valueGetter: (params) => {
-          const total = 300;
-          return total;
-        },
-      },
-      */
       {
         field: "dob",
         headerName: "Date of Birth",
-        width: 200,
-        description: "the dates of birth of the patients",
+        width: 150,
       },
       {
         field: "email",
         headerName: "Email Address",
-        width: 300,
-        description: "the email address of the patients",
+        width: 250,
       },
       {
         field: "mobile",
         headerName: "Contact Number",
-        width: 200,
-        description: "total amount of the order",
+        width: 180,
+      },
+      {
+        field: "actions",
+        headerName: "Actions",
+        width: 180,
+        renderCell: (params) => (
+          <Box sx={{ display: "flex", gap: 2 }}>
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              onClick={() => this.openEditPatientModal(params.row)}
+            >
+              Edit
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              size="small"
+              onClick={() => this.handleDeletePatient(params.row.id)}
+            >
+              Delete
+            </Button>
+          </Box>
+        ),
       },
     ];
-    const rows = patients;
+
+    const rows = this.state.patients; // Data comes from state
+
     return (
       <Box
         sx={{
@@ -82,6 +125,14 @@ export default class PatientList extends Component {
           height: "100%",
         }}
       >
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={this.openAddPatientModal}
+          sx={{ mb: 2 }}
+        >
+          Add Patient
+        </Button>
         <DataGrid
           sx={{
             borderLeft: 0,
@@ -90,15 +141,16 @@ export default class PatientList extends Component {
           }}
           rows={rows}
           columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
-            },
-          }}
-          pageSizeOptions={[15, 20, 30]}
-          rowSelection={false}
+          pageSize={10}
+          rowsPerPageOptions={[10, 20, 30]}
         />
-        <Box></Box>
+        <AddPatientModal
+          open={this.state.isAddPatientModalOpen}
+          onClose={this.closeAddPatientModal}
+          onAddPatient={this.handleAddPatient}
+          onUpdatePatient={this.handleUpdatePatient}
+          editingPatient={this.state.editingPatient}
+        />
       </Box>
     );
   }

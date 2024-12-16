@@ -9,12 +9,12 @@ export default class Request extends Component {
     isModalOpen: false, // To control modal visibility
     editingRequest: null, // Store the request that is being edited
   };
-
+ 
   // Toggle AddRequestModal
   handleAddRequestClick = () => {
     this.setState({ isModalOpen: true });
   };
-
+ 
   handleCloseModal = () => {
     this.setState({ isModalOpen: false, editingRequest: null });
   }; 

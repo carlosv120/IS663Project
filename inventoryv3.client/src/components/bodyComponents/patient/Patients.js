@@ -12,7 +12,7 @@ const old_patients = [{
     ]
 },{
     id:2,firstName: "Test",
-    lastName: "User",
+    lastName: "User", 
     position: "Software Engineer",
     mobile: "+212 6 51 88 61 51",
     dob: "03/28/1979",
