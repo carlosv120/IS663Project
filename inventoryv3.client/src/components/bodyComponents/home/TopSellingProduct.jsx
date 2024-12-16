@@ -11,16 +11,16 @@ import {
 } from "@mui/material";
 export default function TopSellingProduct() {
   const products = [
-    { name: "ASOS Ridey", price: 25.05, quantity: 73, amount: 1.828 },
+    { name: "scalpel", price: 25.05, quantity: 73, amount: 1.828 },
     {
-      name: "Philip Morris International",
+      name: "Sthescope",
       price: 85.05,
       quantity: 84,
       amount: 7.144,
     },
-    { name: "Donna Karan", price: 96.05, quantity: 94, amount: 9.028 },
-    { name: "Marco Pollo", price: 31.09, quantity: 51, amount: 1.585 },
-    { name: "Dolce Gabbana", price: 27.09, quantity: 78, amount: 2.113 },
+    { name: "Thermostat", price: 96.05, quantity: 94, amount: 9.028 },
+    { name: "Scissors", price: 31.09, quantity: 51, amount: 1.585 },
+    { name: "Gloves", price: 27.09, quantity: 78, amount: 2.113 },
   ];
   return (
     <Box

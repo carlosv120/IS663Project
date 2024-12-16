@@ -21,11 +21,12 @@ import {
   AccountCircleOutlined,
 } from "@mui/icons-material";
 import { useState } from "react";
+import { Link } from "react-router-dom"; // Import Link
 
 export default function NavBarComponent() {
   const [notificationAnchorEl, setNotificationAnchorEl] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
-  // handleNotificationClicked
+    // handleNotificationClicked
   const open = Boolean(anchorEl);
   const notificationOpen = Boolean(notificationAnchorEl);
   const handleAvatarClicked = (event) => {
@@ -68,7 +69,7 @@ export default function NavBarComponent() {
                     textDecoration: "none",
                   }}
                 >
-                  Medical Inventory Management System
+                  Inventory System
                 </Typography>
 
                 <Box
@@ -104,10 +105,10 @@ export default function NavBarComponent() {
                     aria-haspopup="true"
                   >
                     <Tooltip title="account settings">
-                      <Avatar sx={{ width: 32, height: 32 }}>E</Avatar>
+                      <Avatar sx={{ width: 32, height: 32 }}>A</Avatar>
                     </Tooltip>
                   </IconButton>
-                  <Typography fontFamily={"Inter"}>Emmanuel Chiobi</Typography>
+                  <Typography fontFamily={"Inter"}>Admin</Typography>
                 </Box>
 
                 <Menu
@@ -124,7 +125,7 @@ export default function NavBarComponent() {
                   </MenuItem>
                   <Divider />
 
-                  <MenuItem>
+                  <MenuItem component={Link} to="/settings">
                     <ListItemIcon>
                       <Settings fontSize="small" />
                     </ListItemIcon>

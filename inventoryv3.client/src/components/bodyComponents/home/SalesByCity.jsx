@@ -4,16 +4,16 @@ import ApexCharts from "react-apexcharts";
 
 export default function SalesByCity() {
   const donutOption = {
-    labels: ["Oujda", "Nador", "Berkan", "Casablanca"],
+    labels: ["Hackensack", "New York City", "Passaic", "Newark"],
     legend: {
       position: "right",
-      fontSize: "14",
+      fontSize: "16",
 
       customLegendItems: [
-        "Oujda <b>30.3%</b>",
-        "Nador <b>37.9%</b>",
-        "Berkan <b>9.0%</b>",
-        "Casablanca <b>22.8%</b>",
+        "Hackensack <b>22.3%</b>",
+        "New York City <b>37.9%</b>",
+        "Passaic <b>9.0%</b>",
+        "Newark <b>22.8%</b>",
       ],
       //   const total = data.reduce((sum, value) => sum + value, 0);
       // const percentages = data.map(value => ((value / total) * 100).toFixed(2) + '%');
@@ -27,9 +27,9 @@ export default function SalesByCity() {
   return (
     <Box
       sx={{
-        margin: 3,
+        margin: 4,
         bgcolor: "white",
-        borderRadius: 2,
+        borderRadius: 1,
         padding: 3,
         height: "100%",
       }}
