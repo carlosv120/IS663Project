@@ -121,7 +121,7 @@ namespace InventoryV3.Server.Controllers
                 // Call the service to soft delete the shipment
                 await _incomingShipmentService.SoftDeleteIncomingShipmentAsync(id, modifiedBy);
 
-                return NoContent(); // 204 No Content
+                return NoContent(); 
             }
             catch (KeyNotFoundException ex)
             {

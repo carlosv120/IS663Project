@@ -33,7 +33,7 @@ export default function Products() {
       headerName: "Price",
       width: 150,
       description: "price of the product",
-      valueGetter: (params) => {
+      renderCell: (params) => {
         const price = params?.row?.price;
         return price ? `$${price.toFixed(2)}` : "N/A";
       },
@@ -55,7 +55,7 @@ export default function Products() {
       headerName: "Stock",
       width: 200,
       description: "how many items in the stock",
-      valueGetter: (params) => {
+      renderCell: (params) => {
         const stock = params?.row?.stock;
         return stock !== undefined ? `${stock} pcs` : "N/A";
       },
@@ -65,7 +65,7 @@ export default function Products() {
       headerName: "Reorder Level",
       width: 200,
       description: "if stock reaches this number, reorder from supplier",
-      valueGetter: (params) => {
+      renderCell: (params) => {
         const reorder = params?.row?.reorder;
         return reorder !== undefined ? `${reorder} pcs` : "N/A";
       },

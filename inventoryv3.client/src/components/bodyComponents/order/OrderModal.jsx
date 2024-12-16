@@ -25,7 +25,7 @@ export default function OrderModal({ order = {} }) {
     const product = orderProduct.product || {}; // Handle undefined product
     return (
       <TableRow key={index}>
-        <TableCell>{product.name || "Unknown Product"}</TableCell>
+        <TableCell>{product.product || "Unknown Product"}</TableCell>
         <TableCell>{orderProduct.quantity || 0}</TableCell>
         <TableCell>{product.stock || "Out of Stock"}</TableCell>
         <TableCell>

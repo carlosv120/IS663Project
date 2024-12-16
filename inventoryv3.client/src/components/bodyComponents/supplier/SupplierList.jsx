@@ -30,7 +30,7 @@ export default class SupplierList extends Component {
                 variant="square"
                 sx={{ borderRadius: 1, width: 30, height: 30 }}
               >
-                Z
+                {`${params.row.firstName[0]}`}
               </Avatar>
               <Typography variant="subtitle2" sx={{ mx: 3 }}>
                 {`${params.row.firstName || ""} ${params.row.lastName || ""} `}

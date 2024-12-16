@@ -56,7 +56,7 @@ export default class PatientList extends Component {
 
   render() {
     const columns = [
-      {
+{
         field: "id",
         headerName: "Patient ID",
         width: 90,
