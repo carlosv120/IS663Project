@@ -78,10 +78,6 @@ export default function SideBarComponent() {
       component: <TrendingUpOutlined fontSize="medium" color="primary" />,
     },
     {
-      title: "Reports",
-      component: <DescriptionOutlined fontSize="medium" color="primary" />,
-    },
-    {
       title: "Settings",
       component: <SettingsOutlined fontSize="medium" color="primary" />,
     },

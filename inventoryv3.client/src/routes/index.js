@@ -5,6 +5,13 @@ import ProtectedRoute from "../components/ProtectedRoute";
 import Home from "../components/bodyComponents/home/Home";
 import Inventory from "../components/bodyComponents/inventory/Inventory";
 import Patient from "../components/bodyComponents/patient/Patient";
+import Order from "../components/bodyComponents/order/Order";
+import User from "../components/bodyComponents/user/User";
+import Setting from "../components/bodyComponents/Settings/Setting";
+import Growth from "../components/bodyComponents/growth/Growth";
+import Revenue from "../components/bodyComponents/revenue/Revenue";
+import Supplier from "../components/bodyComponents/supplier/Supplier";
+import Request from "../components/bodyComponents/request/Request";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,6 +32,13 @@ const router = createBrowserRouter(
         <Route path="/home" element={<Home />} />
         <Route path="/inventory" element={<Inventory />} />
         <Route path="/patients" element={<Patient />} />
+        <Route path="/orders" element={<Order />} />
+        <Route path="/users" element={<User />} />
+        <Route path="/settings" element={<Setting />} />
+        <Route path="/growth" element={<Growth />} />
+        <Route path="/revenue" element={<Revenue />} />
+        <Route path="/suppliers" element={<Supplier />} />
+        <Route path="/requests" element={<Request />} />
       </Route>
     </>
   )
