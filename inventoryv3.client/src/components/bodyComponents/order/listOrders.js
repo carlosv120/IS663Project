@@ -11,6 +11,7 @@ const orders = [
       { quantity: 5, product: productList[8] },
     ],
     customer: users[2],
+    total: 842,
   },
   {
     id: 2,
@@ -20,6 +21,7 @@ const orders = [
       { quantity: 3, product: productList[7] },
     ],
     customer: users[4],
+    total: 3753.00,
   },
   {
     id: 3,
@@ -29,6 +31,7 @@ const orders = [
       { quantity: 3, product: productList[9] },
     ],
     customer: users[1],
+    total: 484.00,
   },
   {
     id: 4,
@@ -38,6 +41,7 @@ const orders = [
       { quantity: 3, product: productList[0] },
     ],
     customer: users[0],
+    total: 8524.00,
   },
   {
     id: 5,
@@ -47,6 +51,7 @@ const orders = [
       { quantity: 3, product: productList[1] },
     ],
     customer: users[7],
+    total: 678.00,
   },
 ];
 
