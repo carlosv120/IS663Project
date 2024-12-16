@@ -60,5 +60,5 @@ export default function TopSellingProduct() {
         </Table>
       </TableContainer>
     </Box>
-  );
+  ); 
 }

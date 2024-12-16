@@ -93,10 +93,10 @@ export default function NavBarComponent() {
                     onClick={notificationHandleClose}
                     onClose={notificationHandleClose}
                   >
-                    <MenuItem>Notification number 1 </MenuItem>
+                    <MenuItem>Order Fulfilment </MenuItem>
                     <Divider />
-                    <MenuItem>Notification number 2</MenuItem>
-                    <MenuItem>Notification number 3</MenuItem>
+                    <MenuItem>Restock </MenuItem>
+                    <MenuItem>Invoice number 235377 needs attention</MenuItem>
                   </Menu>
                   <IconButton
                     onClick={handleAvatarClicked}

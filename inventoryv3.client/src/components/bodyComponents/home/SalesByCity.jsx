@@ -32,7 +32,7 @@ export default function SalesByCity() {
         borderRadius: 1,
         padding: 3,
         height: "100%",
-      }}
+      }} 
     >
       <ApexCharts
         options={donutOption}

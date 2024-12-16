@@ -17,7 +17,7 @@ export default class Request extends Component {
 
   handleCloseModal = () => {
     this.setState({ isModalOpen: false, editingRequest: null });
-  };
+  }; 
 
   handleAddRequest = (newRequest) => {
     this.setState((prevState) => ({
