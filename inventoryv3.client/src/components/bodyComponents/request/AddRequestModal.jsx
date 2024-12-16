@@ -13,7 +13,7 @@ export default class AddRequestModal extends Component {
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-
+ 
   handleSubmit = () => {
     const { id, request_date,Item_Name, item_id, user_id, quantity } = this.state;
     const request = { id, request_date,Item_Name, item_id, user_id, quantity };

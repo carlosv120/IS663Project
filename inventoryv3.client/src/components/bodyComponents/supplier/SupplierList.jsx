@@ -98,6 +98,17 @@ export default class SupplierList extends Component {
           height: "100%",
         }}
       >
+<<<<<<< HEAD
+=======
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={this.openAddSupplierModal}
+          sx={{ mb: 2 }}
+        >
+          Add Supplier
+        </Button> 
+>>>>>>> 2f809e5 (Final Update)
         <DataGrid
           sx={{
             borderLeft: 0,

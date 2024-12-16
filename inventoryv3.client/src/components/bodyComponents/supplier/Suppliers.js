@@ -370,4 +370,4 @@ const suppliers = [
         "is_active": "No"
     }
 ];
-export default suppliers;
+export default suppliers; 
