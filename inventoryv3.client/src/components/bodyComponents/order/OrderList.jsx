@@ -55,9 +55,14 @@ export default class OrderList extends Component {
         headerName: "Mobile",
         width: 400,
         description: "Customer's phone number",
-        valueGetter: (params) => {
+        renderCell: (params) => {
           if (!params || !params.row || !params.row.customer) return "N/A";
-          return params.row.customer.mobile || "N/A";
+          const { mobile = "" } = params.row.customer
+          return (
+            <Typography variant="subtitle2" sx={{ mx: 3 }}>
+              {`${mobile}`}
+            </Typography>
+          )
         },
       },
       {
@@ -65,7 +70,7 @@ export default class OrderList extends Component {
         headerName: "Total Amount",
         width: 300,
         description: "Total amount of the order",
-        valueGetter: () => 300, // Example hardcoded value
+        // valueGetter: () => "N/A", // Example hardcoded value
       },
       {
         field: "details",

@@ -104,10 +104,10 @@ export default function NavBarComponent() {
                     aria-haspopup="true"
                   >
                     <Tooltip title="account settings">
-                      <Avatar sx={{ width: 32, height: 32 }}>E</Avatar>
+                      <Avatar sx={{ width: 32, height: 32 }}>A</Avatar>
                     </Tooltip>
                   </IconButton>
-                  <Typography fontFamily={"Inter"}>Emmanuel Chiobi</Typography>
+                  <Typography fontFamily={"Inter"}>Admin</Typography>
                 </Box>
 
                 <Menu
