@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import { Box, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import AddPatientModal from "./AddPatientModal"; // Import the AddPatientModal component
-import patientsData from "./patients"; // Assuming initial patient data is here
+import patientsList from "./Patients"; // Assuming initial patient data is here
 
 export default class PatientList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      patients: patientsData, // Initialize with your patient data
+      patients: patientsList, // Initialize with your patient data
       isAddPatientModalOpen: false,
       editingPatient: null, // Track the patient being edited, if any
     };
