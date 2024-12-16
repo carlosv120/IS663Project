@@ -6,6 +6,7 @@ import Home from "../components/bodyComponents/home/Home";
 import Inventory from "../components/bodyComponents/inventory/Inventory";
 import Patient from "../components/bodyComponents/patient/Patient";
 import Order from "../components/bodyComponents/order/Order";
+import User from "../components/bodyComponents/user/User"
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,6 +28,7 @@ const router = createBrowserRouter(
         <Route path="/inventory" element={<Inventory />} />
         <Route path="/patients" element={<Patient />} />
         <Route path="/orders" element={<Order />} />
+        <Route path="/users" element={<User />} />
       </Route>
     </>
   )
